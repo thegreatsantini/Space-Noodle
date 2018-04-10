@@ -8,7 +8,7 @@ function init() {
     game.world.resize(WORLD_WIDTH, WORLD_HEIGHT);
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 1000;
+    game.physics.arcade.gravity.y = 750;
     game.physics.arcade.skipQuadTree = false;
 }
 
@@ -23,7 +23,7 @@ function preload() {
     game.load.image('tiles', '../img/tilesheet.png');
 
     //Load characters
-    game.load.spritesheet('spaceNoodle', '../img/characters.gif', 16, 32);
+    game.load.spritesheet('spaceNoodle', '../img/evenCharacters.png', 17, 34);
 
     // Load Floating Tiles
     game.load.spritesheet('floatingTile', '../img/tilesheet.png');
@@ -41,7 +41,7 @@ function create() {
     platforms.setAll('body.allowGravity', false);
     platforms.setAll('body.immovable', true);
 
-    player = game.add.sprite(12, 47, 'spaceNoodle');
+    player = game.add.sprite(2058, 47, 'spaceNoodle');
 
     // player.anchor.set(0.5) NOT WORKINg
 
@@ -64,7 +64,7 @@ function create() {
     player.animations.add('left', [9, 11], 8, true);
     player.animations.add('right', [16, 18], 8, true);
     player.animations.add('jumpLeft', [7], 8, true);
-    player.animations.add('jumpRight', [20], 8, true);
+    player.animations.add('jumpRight', [5], 8, true);
 
     game.camera.follow(player);
 
@@ -157,7 +157,7 @@ function winChecker() {
 }
 
 function collidePlatform(player, platform) {
-
+console.log(player.position.x)
     if (player.position.x >= 2900) {
         winChecker()
     }

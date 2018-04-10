@@ -12,10 +12,17 @@ var level = {
     { start: 66 * TILE_WIDTH, end: 73 * TILE_WIDTH },
     { start: 75 * TILE_WIDTH, end: 80 * TILE_WIDTH },
     { start: 81 * TILE_WIDTH, end: 87 * TILE_WIDTH },
-    { start: 91 * TILE_WIDTH, end: 112 * TILE_WIDTH },
+    { start: 91 * TILE_WIDTH, end: 112 * TILE_WIDTH }
   ],
   bricks: [
-    // { start: { x: 10 * TILE_WIDTH, y: 12  * TILE_WIDTH }, end: 15 * TILE_WIDTH }
+    // { start: { x: 10 * TILE_WIDTH, y: 12  * TILE_WIDTH }, end: 10 * TILE_WIDTH },
+    // { start: { x: 14 * TILE_WIDTH, y: 10  * TILE_WIDTH }, end: 19 * TILE_WIDTH },
+    // { start: { x: 10 * TILE_WIDTH, y: 12  * TILE_WIDTH }, end: 10 * TILE_WIDTH },
+    
+    { start: { x: 66 * TILE_WIDTH, y: 13.6  * TILE_WIDTH }, end: 73 * TILE_WIDTH },
+    // { start: { x: 15 * TILE_WIDTH, y: 9  * TILE_WIDTH }, end: 30 * TILE_WIDTH }
+    // { start: { x: 10 * TILE_WIDTH, y: 12  * TILE_WIDTH }, end: 15 * TILE_WIDTH },
+    // { start: { x: 10 * TILE_WIDTH, y: 12  * TILE_WIDTH }, end: 15 * TILE_WIDTH },
   ]
 };
 
@@ -36,18 +43,8 @@ function createPlatforms(levelText) {
       ground.anchor.setTo(0, 0);
       x += TILE_WIDTH;
     }
-
-    // platforms.create(232, 300, 'floatingTile')
-    // platforms.create(264, 300, 'floatingTile')
-
   });
-  // platforms.create(200, 400, 'floatingTile')
-  // platforms.create(232, 400, 'floatingTile')
-  // platforms.create(264, 400, 'floatingTile')
-  // platforms.create(200, 400, 'floatingTile')
-  // platforms.create(232, 300, 'floatingTile')
-  // platforms.create(264, 300, 'floatingTile')
-  // platforms.create(296, 300, 'floatingTile')
+  
   platforms.create(3000, 0, 'finishLine')
 
 }
