@@ -1,11 +1,14 @@
 var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, "game",
     { init: init, preload: preload, create: create, update: update, render: render });
 
+var winMessage;
+var gameTile = 'Space Noodle Challenge';
+
 function init() {
     game.world.resize(WORLD_WIDTH, WORLD_HEIGHT);
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 500;
+    game.physics.arcade.gravity.y = 1000;
     game.physics.arcade.skipQuadTree = false;
 }
 
@@ -13,21 +16,22 @@ function preload() {
     //Load background
     game.load.image('background', '../img/background.png');
 
+    // Load Flag
+    game.load.spritesheet('finishLine', '../img/castle.png', 311, 494)
+
     //Load platforms/scenery
-    game.load.spritesheet('tiles', '../img/tilesheet.png', 16, 16);
+    game.load.image('tiles', '../img/tilesheet.png');
 
     //Load characters
-    game.load.spritesheet('spaceNoodle', '../img/character1sheet.png', 46, 63);
+    game.load.spritesheet('spaceNoodle', '../img/characters.gif', 16, 32);
 
     // Load Floating Tiles
     game.load.spritesheet('floatingTile', '../img/tilesheet.png');
 }
 
 function create() {
-    background = game.add.sprite(0, 0, 'background');
+    background = game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background');
     background.fixedToCamera = false;
-    background.width = GAME_WIDTH;
-    background.height = GAME_HEIGHT;
 
 
     platforms = game.add.physicsGroup();
@@ -37,27 +41,30 @@ function create() {
     platforms.setAll('body.allowGravity', false);
     platforms.setAll('body.immovable', true);
 
-    player = game.add.sprite(43, 47, 'spaceNoodle');
-    
+    player = game.add.sprite(12, 47, 'spaceNoodle');
+
     // player.anchor.set(0.5) NOT WORKINg
 
     game.physics.arcade.enable(player);
     // player.gravity.y = true;
     // player.body.setSize(32, 45, 0, 0);
-    player.body.setSize(46, 63);
+    player.body.setSize(16, 32);
     player.scale.setTo(1.5);
     player.facing = 'right';
     player.jumping = false;
 
-    var ledge = platforms.create(200, 200, 'floatingTile')
-    ledge.body.immovable = true;
-    // ledge.setAll('body.allowGravity', false);
     
 
-    // player.animations.add('left', [0, 1, 2, 3], 8, true);
-    // player.animations.add('right', [18, 19, 20], 8, true);
-    // player.animations.add('jumpLeft', [5], 8, true);
-    // player.animations.add('jumpRight', [5], 8, true);
+    // Draw castle 
+    platforms.create(3550, 32, 'finishLine')
+
+    // ledge.setAll('body.allowGravity', false);
+
+
+    player.animations.add('left', [9, 11], 8, true);
+    player.animations.add('right', [16, 18], 8, true);
+    player.animations.add('jumpLeft', [7], 8, true);
+    player.animations.add('jumpRight', [20], 8, true);
 
     game.camera.follow(player);
 
@@ -72,16 +79,17 @@ function update() {
         fellDown();
         return;
     }
-    // stop at right wall
+    // stop at left wall
     else if (player.body.x < 0) {
         player.body.x = 0;
         player.body.velocity.x = 0;
     }
-    // 
+    // Figure out
     else if (player.body.x + player.body.width >= game.world.bounds.right) {
         player.body.x -= 25;
         player.body.velocity.x = 0;
     }
+    // figure out
     else if (player.body.y + (player.body.height * 1.5) < 0) {
         player.body.y += 25;
         player.body.velocity.y = 0;
@@ -142,9 +150,22 @@ function render() {
     game.debug.body(platforms);
 }
 
+function winChecker() {
+    winMessage = game.add.text(player.position.x - 100, game.world.centerY, "You survived ", { font: '30px Arial', fill: 'white' });
+    winMessage += game.add.text(player.position.x - 100, game.world.centerY + 100, gameTile, { font: '30px Arial', fill: 'white' })
+    game.paused = true 
+}
+
 function collidePlatform(player, platform) {
+
+    if (player.position.x >= 2900) {
+        winChecker()
+    }
+
+
     //Cancel jump event only if player is on top of platform
     if (player.body.y + player.body.height <= platform.body.y) {
+        console.log('app.js:153 What do?')
         player.jumping = false;
     }
 }
@@ -152,6 +173,7 @@ function collidePlatform(player, platform) {
 function fellDown() {
     player.kill();
     gameOver = true;
+    winMessage = game.add.text(player.position.x, game.world.centerY, 'YOU LOSE', { font: '30px Arial', fill: 'white' })
     console.log("fell down a hole");
     console.log('TODO: Gameover logic');
 }
