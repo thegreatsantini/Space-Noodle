@@ -173,9 +173,22 @@ function didWin() {
     console.log('before')
     clearInterval(counter);
     console.log('after')
-    winMessage = game.add.text(player.position.x - 100, game.world.centerY, "You survived ", { font: '30px Arial', fill: 'white' });
-    winMessage += game.add.text(player.position.x - 100, game.world.centerY + 100, gameTitle, { font: '30px Arial', fill: 'white' })
-    // winMessage += game.add.text(player.position.x - 100, game.world.centerY + 100, `You completed the course in ${count} minutes`, { font: '30px Arial', fill: 'white' })
+    winMessage = game.add.text(
+        player.position.x - 100, 
+        game.world.centerY, 
+        "You survived the", 
+        { font: '30px Arial', fill: 'white' }
+    );
+    winMessage += game.add.text(
+        player.position.x - 100, 
+        game.world.centerY + 100, 
+        gameTitle, 
+        { font: '30px Arial', fill: 'white' })
+    // winMessage += game.add.text(
+        // player.position.x - 100, 
+        // game.world.centerY + 100, 
+        // `You completed the course in ${count} minutes`, 
+        // { font: '30px Arial', fill: 'white' })
     
     game.paused = true
 }
@@ -197,7 +210,12 @@ function collidePlatform(player, platform) {
 function fellDown() {
     player.kill();
     gameOver = true;
-    winMessage = game.add.text(player.position.x, game.world.centerY, 'YOU LOSE', { font: '30px Arial', fill: 'white' })
+    winMessage = game.add.text(
+        player.position.x, 
+        game.world.centerY, 
+        'YOU LOSE', 
+        { font: '30px Arial', fill: 'white' }
+    )
     console.log("fell down a hole");
     console.log('TODO: Gameover logic');
 }
