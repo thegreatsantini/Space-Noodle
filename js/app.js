@@ -23,37 +23,43 @@ function preload() {
     game.load.image('tiles', '../img/tilesheet.png');
 
     //Load characters
-    game.load.spritesheet('spaceNoodle', '../img/evenCharacters.png', 17, 34);
+    game.load.spritesheet('spaceNoodle', '../img/santa.png', 16, 16);
 
     // Load Floating Tiles
     game.load.spritesheet('floatingTile', '../img/tilesheet.png');
+
 }
 
 function create() {
     background = game.add.tileSprite(0, 0, WORLD_WIDTH, WORLD_HEIGHT, 'background');
     background.fixedToCamera = false;
 
-
     platforms = game.add.physicsGroup();
     placeScenery();
     createPlatforms('level1_1');
 
+
     platforms.setAll('body.allowGravity', false);
     platforms.setAll('body.immovable', true);
 
-    player = game.add.sprite(2058, 47, 'spaceNoodle');
+    player = game.add.sprite(2000, 47, 'spaceNoodle');
+    winMessage = game.add.text(player.position.x + 100, game.world.centerY - 100, 'Use the arrow keys to move', { font: '30px Arial', fill: 'white' });
+    winMessage += game.add.text(player.position.x + 100, game.world.centerY - 150, 'Click space to jump', { font: '30px Arial', fill: 'white' })
+
+
 
     // player.anchor.set(0.5) NOT WORKINg
 
     game.physics.arcade.enable(player);
     // player.gravity.y = true;
     // player.body.setSize(32, 45, 0, 0);
-    player.body.setSize(16, 32);
-    player.scale.setTo(1.5);
+    player.body.setSize(16, 16);
+    player.scale.setTo(2);
+    player.anchor.setTo(0.5, 0.5)
     player.facing = 'right';
     player.jumping = false;
 
-    
+
 
     // Draw castle 
     platforms.create(3550, 32, 'finishLine')
@@ -61,9 +67,9 @@ function create() {
     // ledge.setAll('body.allowGravity', false);
 
 
-    player.animations.add('left', [9, 11], 8, true);
-    player.animations.add('right', [16, 18], 8, true);
-    player.animations.add('jumpLeft', [7], 8, true);
+    player.animations.add('left', [1, 2, 3, 4, 5], 8, true);
+    player.animations.add('right', [1, 2, 3, 4, 5], 10, true);
+    player.animations.add('jumpLeft', [5], 8, true);
     player.animations.add('jumpRight', [5], 8, true);
 
     game.camera.follow(player);
@@ -72,6 +78,7 @@ function create() {
 }
 
 function update() {
+
     game.physics.arcade.collide(player, platforms, collidePlatform, null, this);
 
     //Detect if you fell down a hole
@@ -118,6 +125,7 @@ function update() {
     if (cursors.left.isDown) {
         player.body.velocity.x = -200;
         player.facing = 'left';
+        player.scale.x = -2
         if (!player.jumping) {
             player.play('left');
         }
@@ -125,6 +133,7 @@ function update() {
     else if (cursors.right.isDown) {
         player.body.velocity.x = 200;
         player.facing = 'right';
+        player.scale.x = 2
         if (!player.jumping) {
             player.play('right');
         }
@@ -144,22 +153,23 @@ function update() {
 }
 
 function render() {
-    game.debug.bodyInfo(player);
-    game.debug.body(player);
+    // game.debug.bodyInfo(layer);
+    // game.debug.body(player);
 
-    game.debug.body(platforms);
 }
 
-function winChecker() {
+function didWin() {
+    console.log(counter)
+    clearInterval(counter);
     winMessage = game.add.text(player.position.x - 100, game.world.centerY, "You survived ", { font: '30px Arial', fill: 'white' });
     winMessage += game.add.text(player.position.x - 100, game.world.centerY + 100, gameTile, { font: '30px Arial', fill: 'white' })
-    game.paused = true 
+    game.paused = true
 }
 
 function collidePlatform(player, platform) {
-console.log(player.position.x)
+    // console.log(player.position.x)
     if (player.position.x >= 2900) {
-        winChecker()
+        didWin()
     }
 
 
@@ -177,3 +187,20 @@ function fellDown() {
     console.log("fell down a hole");
     console.log('TODO: Gameover logic');
 }
+
+let timer = 0;
+var counter;
+
+
+function startTimer(e) {
+    if (e.keyCode === 39 || e.keyCode === 37 || e.keyCode === 32) {
+        counter = setInterval(() => {
+            console.log(timer)
+            timer++
+        }, 1000)
+    }
+}
+
+window.addEventListener('keydown', (e) => {
+    startTimer(e)
+})
