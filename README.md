@@ -1,7 +1,10 @@
 # Space Noodle
 
-Play the game [here](http://spacenoodle.surge.sh/)
+[Take the Space Noodle Challenge](http://spacenoodle.surge.sh/)
 Art by Atila Salviano(minus Santa)
+
+## Objectives 
+Create a Super Marion Hack, using original gameplay and mechanics as inspiration.
 
 ## to contribute
 
@@ -10,7 +13,7 @@ First fork repo
 Clone 
 ``https://github.com/thegreatsantini/Space-Noodle.git``
 
-IInstall dependencies
+Install dependencies
 ``npm install``
 
 Run local sever
@@ -18,10 +21,9 @@ Run local sever
 
 <hr>
 
-**Road Map**
+ ## Road Map
 1)  Fix timer in setInterval.(should seriously be working line:210)
 2) Add message at finish that shows completion time.(line:178)
-3) Check that http-server runs correctly after ``npm i`` on a computer that hasn't installed globally.
 3) Add Title card and Game Over screen, possibly through game states.
 4) Implement  dynamic level building.
 5) Add Score counter.
@@ -30,3 +32,11 @@ Run local sever
 8) More levels.
 
 
+## Tools and Technologies 
+
+ - HTML
+ - Canvas
+ - JavaScript
+ - Phaser.io
+ - GitHub 
+ - Trello
