@@ -2,7 +2,7 @@ var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, "game",
     { init: init, preload: preload, create: create, update: update, render: render });
 
 var winMessage;
-var gameTile = 'Space Noodle Challenge';
+var gameTitle = 'Space Noodle Challenge';
 
 function init() {
     game.world.resize(WORLD_WIDTH, WORLD_HEIGHT);
@@ -42,10 +42,21 @@ function create() {
     platforms.setAll('body.allowGravity', false);
     platforms.setAll('body.immovable', true);
 
-    player = game.add.sprite(2000, 47, 'spaceNoodle');
-    winMessage = game.add.text(player.position.x + 100, game.world.centerY - 100, 'Use the arrow keys to move', { font: '30px Arial', fill: 'white' });
-    winMessage += game.add.text(player.position.x + 100, game.world.centerY - 150, 'Click space to jump', { font: '30px Arial', fill: 'white' })
+    player = game.add.sprite(0, 47, 'spaceNoodle');
 
+    winMessage = game.add.text(
+        player.position.x + 100,
+        game.world.centerY - 100,
+        'Use the arrow keys to move',
+        { font: '30px Arial', fill: 'white' }
+    );
+
+    winMessage += game.add.text(
+        player.position.x + 100,
+        game.world.centerY - 150,
+        'Click space to jump',
+        { font: '30px Arial', fill: 'white' }
+    )
 
 
     // player.anchor.set(0.5) NOT WORKINg
@@ -159,10 +170,13 @@ function render() {
 }
 
 function didWin() {
-    console.log(counter)
+    console.log('before')
     clearInterval(counter);
+    console.log('after')
     winMessage = game.add.text(player.position.x - 100, game.world.centerY, "You survived ", { font: '30px Arial', fill: 'white' });
-    winMessage += game.add.text(player.position.x - 100, game.world.centerY + 100, gameTile, { font: '30px Arial', fill: 'white' })
+    winMessage += game.add.text(player.position.x - 100, game.world.centerY + 100, gameTitle, { font: '30px Arial', fill: 'white' })
+    // winMessage += game.add.text(player.position.x - 100, game.world.centerY + 100, `You completed the course in ${count} minutes`, { font: '30px Arial', fill: 'white' })
+    
     game.paused = true
 }
 
@@ -175,7 +189,7 @@ function collidePlatform(player, platform) {
 
     //Cancel jump event only if player is on top of platform
     if (player.body.y + player.body.height <= platform.body.y) {
-        console.log('app.js:153 What do?')
+        // console.log('app.js:153 What do?')
         player.jumping = false;
     }
 }
@@ -191,11 +205,10 @@ function fellDown() {
 let timer = 0;
 var counter;
 
-
 function startTimer(e) {
     if (e.keyCode === 39 || e.keyCode === 37 || e.keyCode === 32) {
         counter = setInterval(() => {
-            console.log(timer)
+            // console.log(timer)
             timer++
         }, 1000)
     }

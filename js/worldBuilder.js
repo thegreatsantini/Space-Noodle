@@ -69,8 +69,6 @@ function placeScenery() {
       x += TILE_WIDTH;
     }
 
-    console.log(tile.end);
-    console.log('x', x);
     while (x <= tile.end) {
       let ground = platforms.create(x, tile.start.y, 'tiles');
       ground.anchor.setTo(0, 0);
