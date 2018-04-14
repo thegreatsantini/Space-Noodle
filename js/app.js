@@ -170,7 +170,7 @@ function render() {
 }
 
 function didWin() {
-    console.log('before')
+    console.log(counter)
     clearInterval(counter);
     console.log('after')
     winMessage = game.add.text(
