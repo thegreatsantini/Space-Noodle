@@ -170,9 +170,8 @@ function render() {
 }
 
 function didWin() {
-    console.log(counter)
     clearInterval(counter);
-    console.log('after')
+    console.log('func ran')
     winMessage = game.add.text(
         player.position.x - 100, 
         game.world.centerY, 

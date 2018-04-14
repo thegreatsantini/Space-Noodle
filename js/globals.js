@@ -1,6 +1,6 @@
 // Constants
-var GAME_HEIGHT = 500;
-var GAME_WIDTH = 700;
+var GAME_HEIGHT = 800;
+var GAME_WIDTH = 500;
 var WORLD_WIDTH = 3500;
 var WORLD_HEIGHT = 500;
 var TILE_WIDTH = 32;
